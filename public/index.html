@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <link href="/css/login.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <h2>Enter room details</h2>
+        <form class="login-form" action="/scene.html" method="GET">
+          <input
+            type="text"
+            name="avatar"
+            placeholder="avatar"
+            id="avatar"
+            required
+          />
+          <input type="text" name="username" placeholder="username" required />
+          <button>Join room</button>
+        </form>
+        <input
+          type="button"
+          value="Open Ready Player Me"
+          onClick="displayIframe()"
+        />
+        <p id="avatarUrl">Avatar URL:</p>
+
+        <iframe
+          id="iframe"
+          class="iframe-content"
+          allow="camera *; microphone *"
+        ></iframe>
+      </div>
+    </div>
+    <script>
+      const subdomain = "demo"; // Replace with your custom subdomain
+      const frame = document.getElementById("iframe");
+
+      frame.src = `https://${subdomain}.readyplayer.me/avatar?frameApi`;
+
+      window.addEventListener("message", subscribe);
+      document.addEventListener("message", subscribe);
+
+      function subscribe(event) {
+        const json = parse(event);
+
+        if (json?.source !== "readyplayerme") {
+          return;
+        }
+
+        // Susbribe to all events sent from Ready Player Me once frame is ready
+        if (json.eventName === "v1.frame.ready") {
+          frame.contentWindow.postMessage(
+            JSON.stringify({
+              target: "readyplayerme",
+              type: "subscribe",
+              eventName: "v1.**",
+            }),
+            "*"
+          );
+        }
+
+        // Get avatar GLB URL
+        if (json.eventName === "v1.avatar.exported") {
+          console.log(`Avatar URL: ${json.data.url}`);
+          document.getElementById("avatar").value = `${json.data.url}`;
+          document.getElementById("iframe").hidden = true;
+        }
+
+        // Get user id
+        if (json.eventName === "v1.user.set") {
+          console.log(
+            `User with id ${json.data.id} set: ${JSON.stringify(json)}`
+          );
+        }
+      }
+
+      function parse(event) {
+        try {
+          return JSON.parse(event.data);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function displayIframe() {
+        document.getElementById("iframe").hidden = false;
+      }
+    </script>
+  </body>
+</html>

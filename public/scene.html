@@ -1,0 +1,460 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Basic Example — Networked-Aframe</title>
+    <meta name="description" content="Basic Example — Networked-Aframe" />
+
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.slim.js"></script>
+    <script src="/easyrtc/easyrtc.js"></script>
+    <script src="https://unpkg.com/networked-aframe@^0.9.0/dist/networked-aframe.min.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <!-- <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.js"></script> -->
+    <script src="/js/spawn-in-circle.component.js"></script>
+    <script src="/js/tppcontrols.js"></script>
+    <script src="/js/play-on-click.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script>
+      // see issue https://github.com/networked-aframe/networked-aframe/issues/267
+      NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
+      NAF.schemas.getComponents = (template) => {
+        if (!NAF.schemas.hasTemplate("#avatar-template")) {
+          NAF.schemas.add({
+            template: "#avatar-template",
+            components: [
+              "position",
+              "rotation",
+              {
+                selector: ".model",
+                component: "gltf-model",
+              },
+              {
+                selector: ".nametag",
+                component: "troika-text",
+                property:"value",
+              },
+            ],
+          });
+        }
+        const components = NAF.schemas.getComponentsOriginal(template);
+        return components;
+      };
+      AFRAME.registerComponent("model-changer", {
+        init: function () {
+          var params = getUrlParams();//https://d1a370nemizbjq.cloudfront.net/fb5cb446-bb16-47ad-979a-a5fc21f73248.glb
+            this.el.setAttribute(
+              "gltf-model",
+              params.avatar
+            );//https://d1a370nemizbjq.cloudfront.net/4d2b6f30-7929-49db-9e70-34b3f554793c.glb
+        function getUrlParams() {
+        var match;
+        var pl = /\+/g; // Regex for replacing addition symbol with a space
+        var search = /([^&=]+)=?([^&]*)/g;
+        var decode = function (s) {
+          return decodeURIComponent(s.replace(pl, " "));
+        };
+        var query = window.location.search.substring(1);
+        var urlParams = {};
+
+        match = search.exec(query);
+        while (match) {
+          urlParams[decode(match[1])] = decode(match[2]);
+          match = search.exec(query);
+        }
+        return urlParams;
+      }
+          
+        },
+      });
+      AFRAME.registerComponent("text-changer", {
+        init: function () {
+          var params = getUrlParams();
+        // username = prompt("Choose a username", username);
+        
+        this.el.setAttribute("troika-text","value", params.username);
+        
+        function getUrlParams() {
+        var match;
+        var pl = /\+/g; // Regex for replacing addition symbol with a space
+        var search = /([^&=]+)=?([^&]*)/g;
+        var decode = function (s) {
+          return decodeURIComponent(s.replace(pl, " "));
+        };
+        var query = window.location.search.substring(1);
+        var urlParams = {};
+
+        match = search.exec(query);
+        while (match) {
+          urlParams[decode(match[1])] = decode(match[2]);
+          match = search.exec(query);
+        }
+        return urlParams;
+      }
+        },
+      });
+      AFRAME.registerGeometry("tetraHedr", {
+  schema: {
+    vertices: {
+      default: [],
+    },
+  },
+
+  init: function (data) {
+    var geometry = new THREE.Geometry();
+    geometry.vertices = data.vertices.map(function (vertex) {
+      var points = vertex.split(" ").map(function (x) {
+        return parseFloat(x);
+      });
+      return new THREE.Vector3(points[0], points[1], points[2]);
+    });
+    geometry.computeBoundingBox();
+    geometry.faces.push(new THREE.Face3(0, 1, 2));
+    geometry.faces.push(new THREE.Face3(0, 2, 3));
+    geometry.faces.push(new THREE.Face3(0, 3, 1));
+    geometry.faces.push(new THREE.Face3(1, 3, 2));
+    geometry.mergeVertices();
+    geometry.computeFaceNormals();
+    geometry.computeVertexNormals();
+    this.geometry = geometry;
+  },
+});
+
+    </script>
+    
+
+    <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+    <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
+
+    <!--<script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/gh/IdeaSpaceVR/aframe-particle-system-component@master/dist/aframe-particle-system-component.min.js"></script>
+    <!-- <script src="/js/spawn-in-circle.component.js"></script> -->
+  </head>
+  
+  <body>
+    
+    <a-scene
+      networked-scene="
+      room: basic;
+      debug: true;
+      adapter: easyrtc;
+      audio: true;    
+      connectOnLoad: true;
+    "
+    renderer="logarithmicDepthBuffer: true;"
+    rotation="0 0 0"
+    cursor="rayOrigin: mouse"
+    >
+      <a-assets>
+        <img id="platform" src="https://i.imgur.com/mYmmbrp.jpg">
+
+        <img
+          id="grid"
+          src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png"
+          crossorigin="anonymous"
+        />
+        <img
+          id="sky"
+          src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/https://i.imgur.com/WqlqEkq.jpg"
+          crossorigin="anonymous"
+        />
+        <video
+          id="videoBunny"
+          preload="auto"
+          src="./videoplayback.mp4"
+          width="160"
+          height="90"
+          autoplay
+          loop="true"
+          crossorigin="anonymous"
+          muted
+        ></video>
+        <video
+          id="videoFireworks"
+          preload="auto"
+          src="./production ID_4911644.mp4"
+          width="160"
+          height="90"
+          autoplay="true"
+          loop="true"
+          crossorigin="anonymous"
+          muted
+        ></video>
+        <audio
+        id="music"
+        src="https://cdn.glitch.com/b94008f4-3267-4c66-a877-4503bc6086b0%2FKmagMixRedux.mp3?v=1590508702065"
+      ></audio>
+        <audio id="mallaudio"src="./videoplayback.mp4"></audio>
+        <a-asset-item
+          id="duck"
+          src="https://cdn.glitch.global/54e7cb19-616a-40b1-8e4a-a47e3db2611e/Duck.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="fox"
+          src="https://d1a370nemizbjq.cloudfront.net/4d2b6f30-7929-49db-9e70-34b3f554793c.glb"
+        ></a-asset-item>
+        <a-asset-item id="vr-scene1" src="./untitled8.glb"> </a-asset-item>
+        <a-asset-item id="vr-scene2" src="./shoppin-mall/scene.gltf">
+          <a-asset-item id="vr-scene3" src="./untitled2.glb">
+            <a-asset-item id="vr-scene4" src="./billboard/scene.gltf">
+
+
+        <!-- Templates -->
+
+        <!-- Avatar -->
+        <template id="avatar-template">
+          <a-entity class="avatar" networked-audio-source>
+            <a-entity
+              class="nametag"
+              troika-text="value: Hello ji there!;color: red;outlineColor: black;outlineWidth: 0.002;"
+              troika-color="black"
+              position="-60 6 0"
+              scale="2 2 2"
+            ></a-entity>
+
+            <a-entity class="model" rotation="0 180 0"
+            scale="2.8 2.8 2.8"
+            position="-60 0 0" gltf-model></a-entity>
+            
+          </a-entity>
+        </template>
+
+        <!-- /Templates -->
+      </a-assets>
+      
+      <a-entity
+        follow-box="target: #player"
+        look-controls
+        movement-controls="fly: true; speed: 1"
+      >
+        <a-entity camera position="-60 6 -0.3" rotation="0 0 0"id="cam"></a-entity>
+      </a-entity>
+
+      <a-entity
+        id="player"
+        camera
+        networked="template:#avatar-template;attachTemplateToLocal:false;"
+        position="180 1.6 -2"
+        rotation="0 0 0"
+        spawn-in-circle="radius:3"
+        wasd-controls
+        look-controls
+        rotate-with-camera
+      >
+      <a-entity
+      class="nametag"
+      troika-text="value: Hello  ji there!;color:#939393;outlineColor: black;outlineWidth: 0.002;"
+      troika-color="black"
+      position="-60 5.6 0"
+      rotation="0 0 0"
+      scale="2 2 2 "
+      text-changer
+    ></a-entity>
+    
+        <a-entity
+          class="model"
+          gltf-model="#fox"
+          rotation="0 180 0"
+              scale="2.8 2.8 2.8"
+              position="-60 0 0"
+
+          model-changer
+        ></a-entity>
+      </a-entity>
+      
+        <!-- <a-entity
+        position="83 0.6 -210"
+        geometry="primitive: plane; width: 107; height: 107;"
+        material="color: #3F3F44;opacity: 0.3;"
+        rotation="-90 10 0"
+      ></a-entity>
+      <a-entity
+        position="50 0.7 -170"
+        geometry="primitive: plane; width: 47; height: 47;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 0 0"
+      ></a-entity>
+      <a-entity
+        position="82 0.8 -140"
+        geometry="primitive: plane; width: 43; height: 43;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 0 0"
+      ></a-entity> -->
+     
+      <!-- <a-entity
+        position="-10 1 0"
+        geometry="primitive: plane; width: 80; height: 80;"
+        material="color: #778899;"
+        rotation="-90 0 0"
+      ></a-entity> -->
+      <!-- <a-entity
+        position="0 1 -250"
+        geometry="primitive: plane; width: 105; height: 120;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 60 0"
+      ></a-entity>
+      <a-entity
+        position="70 1 -168"
+        geometry="primitive: plane; width: 90; height: 50;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 50 0"
+      ></a-entity>
+      
+      <a-entity
+        position="-5 1 -194.5"
+        geometry="primitive: plane; width: 34; height: 100;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 50 0"
+      ></a-entity>
+      <a-entity
+        position="80 1 -140"
+        geometry="primitive: plane; width: 50; height: 20;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 50 0"
+      ></a-entity>
+      <a-entity
+        position="143 1 -206"
+        geometry="primitive: plane; width: 198; height: 50;"
+        material="color: #3F3F44;opacity: 0.3"
+        rotation="-90 50 0"
+      ></a-entity>-->
+      <a-entity
+      position="40 11 -260"
+      geometry="primitive: plane; width: 230; height: 22;"
+      material="shader: flat; src: #videoFireworks"
+      rotation="0 17 0"
+      play-on-click
+    ></a-entity>  
+    <!-- <a-cylinder
+        radius="2"
+        height="5"
+        position="-5 22 -85"
+        sound="src: #music; 
+                    autoplay: true;
+                    volume: 1;
+                    refDistance: 65;
+                    rolloffFactor: 10"
+      >
+      </a-cylinder> -->
+
+    <!-- <a-entity geometry="primitive: triangle" material="side: double" position="0 0 0"></a-entity> -->
+
+        <a-entity
+        gltf-model="#vr-scene3"
+        rotation="0 180 0"
+        scale="16 8 6.5"
+        rotation="0 40 0"
+        position="63 0.6 -214"
+      ></a-entity>  
+
+       <a-entity
+        position="233 0.7 -250"
+        geometry="primitive: plane; width: 180; height: 28;"
+        material="color: white;"
+        rotation="-90 50 0"
+      ></a-entity> 
+
+      <a-entity
+        gltf-model="#vr-scene2"
+        rotation="0 50 0"
+        scale="0.05 0.05 0.05"
+        position="5 0 1"
+        material="metalness: 0.8;"
+      ></a-entity>
+
+      <a-entity
+        light="color: #ccccff; intensity: 1.1; type: ambient;"
+        visible="no"
+      ></a-entity>
+      <a-entity
+        light="color: #ccccff; intensity: 1.5;"
+        position="5 5 5"
+      ></a-entity>
+       <a-entity
+      material="shader: flat; src: #videoBunny"
+      geometry="primitive: plane; width: 38; height: 22;"
+      position="-2 38.5 -80"
+      rotation="0 45 0"
+      play-on-click
+    > 
+    </a-entity> 
+    <a-entity
+    class="model"
+    gltf-model="#vr-scene4"
+    rotation="0 45 0"
+        scale="25 25 25"
+        position="-5 22 -85"
+  >
+</a-entity>
+
+      <!-- <a-entity
+        light="color: #47B5FF; intensity: 0.1"
+        position="10 30 -30"
+      ></a-entity> -->
+      <!-- <a-entity
+        light="color: #47B5FF; intensity: 0.5"
+        position="50 4 -167"
+      ></a-entity>
+       -->
+      <a-sky gltf-model="#vr-scene1" rotation="0 70 0" scale="11 11 11"></a-sky>
+      <a-entity id="particles" particle-system="preset: snow"></a-entity>
+    </a-scene>
+    <div class="actions">
+      <button id="mic-btn" type="button" class="button">Mute Mic</button>
+      <button id="cam-btn" type="button" class="button">3rd person view</button>
+    </div>
+      <script src="js/gotmore.js"></script>
+    <script>
+      // Mic status
+      let micEnabled = true;
+      let camaraEnabled = true;
+      // Mic button ele
+      const micBtnEle = document.getElementById("mic-btn");
+      const camaraBtn = document.getElementById("cam-btn");
+      const camaraElt = document.getElementById("cam");
+      
+      // On mobile remove elements that are resource heavy
+      var isMobile = AFRAME.utils.device.isMobile();
+
+      if (isMobile) {
+        var particles = document.getElementById("particles");
+        particles.parentNode.removeChild(particles);
+      }
+ 
+      // Define custom schema for syncing avatar color, set by random-color
+      // NAF.schemas.add({
+      //   template: '#avatar-template',
+      //   components: [
+      //     'position',
+      //     'rotation',
+      //     {
+      //       selector: '.head',
+      //       component: 'material',
+      //       property: 'color'
+      //     }
+      //   ]
+      // });
+      function onConnect() {
+        console.log("onConnect", new Date());
+        // document.querySelector("a-scene").addEventListener("loaded", onSceneLoad);
+        // Handle mic button click (Mute and Unmute)
+        micBtnEle.addEventListener("click", function () {
+          NAF.connection.adapter.enableMicrophone(!micEnabled);
+          micEnabled = !micEnabled;
+          micBtnEle.textContent = micEnabled ? "Mute Mic" : "Unmute Mic";
+        });
+        camaraBtn.addEventListener("click", function () {
+          // NAF.connection.adapter.enableMicrophone(!micEnabled);
+          if (!camaraEnabled) {
+            camaraElt.setAttribute("position", "-60 6 -0.3");
+          } else {
+            camaraElt.setAttribute("position", "-60 6 6");
+          }
+          camaraEnabled = !camaraEnabled;
+          camaraBtn.textContent = camaraEnabled
+            ? "3rd person view"
+            : "1st person view";
+        });
+      }
+    </script>
+  </body>
+</html>
