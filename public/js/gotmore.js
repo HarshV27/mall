@@ -1,7 +1,7 @@
+//three js code of all the products in our mall
 var my_scene = document.querySelector("a-scene");
 var sceneEl = document.createElement("a-entity");
 sceneEl.setAttribute("position", "74 0 -130");
-// sceneEl.setAttribute("position", "100 0 0");
 sceneEl.setAttribute("rotation", "0 30 0");
 sceneEl.setAttribute("id", "goto");
 AFRAME.registerComponent("do-something-once-loaded", {
@@ -10,7 +10,7 @@ AFRAME.registerComponent("do-something-once-loaded", {
     const playBtn = document.querySelector("#goto");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Ready Player Me\n Men's Stylish Jackket&itemrating=3.9&price=5000&product=./products/p1.glb&scale=3.7 3.7 3.7`,
+        `/checkout.html?itemname=Ready Player Me\n Men's Stylish Jackket&itemrating=3.9&price=5000&product=./products/p1.glb&description=Biker Jacket,Pattern Solid,Regular fit Jacket&scale=3.7 3.7 3.7&qr=./qr_code/1p.png`,
         "_blank"
       );
     });
@@ -75,7 +75,6 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-entity");
-// model.setAttribute("class", "nametag");
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.35");
 model.setAttribute(
@@ -105,7 +104,7 @@ AFRAME.registerComponent("do-something-once-loaded-1", {
     const playBtn = document.querySelector("#goto1");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Mens Casual Wear&itemrating=4.2&price=3500&product=./products/p2.glb`,
+        `/checkout.html?itemname=Mens Casual Wear&itemrating=4.2&price=3500&product=./products/p2.glb&description=Formal,Regular Fit,Solid,Spread,Long Sleeve&scale=3.7 3.7 3.7&qr=./qr_code/2p.png`,
         "_blank"
       );
     });
@@ -170,7 +169,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.8 0.34");
 model.setAttribute("troika-text", "value", "Mens Casual Wear");
@@ -195,7 +194,7 @@ AFRAME.registerComponent("do-something-once-loaded-2", {
     const playBtn = document.querySelector("#goto2");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Mens Stylish Party Coat&itemrating=4.3&price=6500&product=./products/p3.glb`,
+        `/checkout.html?itemname=Mens Stylish Party Coat&itemrating=4.3&price=6500&product=./products/p3.glb&description=Slim Fit,80percent Wool 20 percent Polyester,Lining:100 percent Polyester.Two side pockets and two inner pockets&scale=3.7 3.7 3.7&qr=./qr_code/3p.png `,
         "_blank"
       );
     });
@@ -260,7 +259,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.8 0.34");
 model.setAttribute("troika-text", "value", "Mens Stylish Party Coat");
@@ -284,7 +283,11 @@ AFRAME.registerComponent("do-something-once-loaded-3", {
     const playBtn = document.querySelector("#goto3");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Men's Lime Green\nOffice Shirt&itemrating=4.0&price=2500&product=./products/p4.glb`,
+        `/checkout.html?itemname=Men's Lime Green\nOffice Shirt&itemrating=4.0&price=2500&product=./products/p4.glb&description=Loose Fit
+        Fabric : Rayon
+        Color : Multi
+        Sleeve Type : Fullsleeve
+        Can be be styled both as a breezy casual outfit and a playful outfit&scale=3.7 3.7 3.7&qr=./qr_code/4p.png`,
         "_blank"
       );
     });
@@ -349,7 +352,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Men's Lime Green\nOffice Shirt");
@@ -374,7 +377,11 @@ AFRAME.registerComponent("do-something-once-loaded-4", {
     const playBtn = document.querySelector("#goto4");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Women Stylish Looking\nDress&itemrating=4.5&price=5500&product=./products/p5.glb`,
+        `/checkout.html?itemname=Women Stylish Looking\nDress&itemrating=4.5&price=5500&product=./products/p5.glb&description=Fabric - Cotton
+        Pattern - Solid
+        Neck style - Shirt Collar
+        Closure Type - Button
+        Sleeve Length - Short Sleeves&scale=3.7 3.7 3.7&qr=./qr_code/5p.png`,
         "_blank"
       );
     });
@@ -439,7 +446,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Women Stylish Looking\nDress");
@@ -463,7 +470,10 @@ AFRAME.registerComponent("do-something-once-loaded-5", {
     const playBtn = document.querySelector("#goto5");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Women Party Wear\nDress&itemrating=4.2&price=5500&product=./products/p6.glb`,
+        `/checkout.html?itemname=Women Party Wear\nDress&itemrating=4.2&price=5500&product=./products/p6.glb&description=Fit Type: Slim Fit
+        Material: 95 percent Cotton 5 percent Polyester, Pattern: Solid
+        Sleeve: Sleeveless, Neck: Mock Neck
+        Fit Type: Slim Fit, Closure: Pull On&scale=3.7 3.7 3.7&qr=./qr_code/6p.png`,
         "_blank"
       );
     });
@@ -528,7 +538,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Women Party Wear\nDress");
@@ -552,7 +562,10 @@ AFRAME.registerComponent("do-something-once-loaded-6", {
     const playBtn = document.querySelector("#goto6");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Women's Beautiful Pink\nDress&itemrating=3.8&price=2500&product=./products/p7.glb`,
+        `/checkout.html?itemname=Women's Beautiful Pink\nDress&itemrating=3.8&price=2500&product=./products/p7.glb&description=Type: Regular
+        Material: Cotton , Color : Multicolor , Printed ,Sleeve - 4 Inches
+        Item Length : 4 Feet ( 49 Inches) ,Chest Size : Free Size (Up To 44 Inches -Xxl)
+        Fit Style : Regular Fit ,Package Contents: 1 Midi Dress; Neck Type And Sleeves: Round Neck & Short Sleeve Attached Inside&scale=3.7 3.7 3.7&qr=./qr_code/7p.png`,
         "_blank"
       );
     });
@@ -617,7 +630,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Women's Beautiful Pink\nDress");
@@ -641,7 +654,8 @@ AFRAME.registerComponent("do-something-once-loaded-7", {
     const playBtn = document.querySelector("#goto7");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Women's Indian Casual\nWear&itemrating=4.3&price=4500&product=./products/p8.glb`,
+        `/checkout.html?itemname=Women's Indian Casual\nWear&itemrating=4.3&price=4500&product=./products/p8.glb&description=Fabric detail: Beautiful Stitched 100 percent pure Cotton printed Salwar Suit For women
+        Readymade Stitched Fabric Set: Stitched Cotton Top, Stitched Cotton Bottom and Stitched Cotton Dupatta&scale=3.7 3.7 3.7&qr=./qr_code/8p.png`,
         "_blank"
       );
     });
@@ -706,7 +720,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Women's Indian Casual\nWear");
@@ -730,7 +744,12 @@ AFRAME.registerComponent("do-something-once-loaded-8", {
     const playBtn = document.querySelector("#goto8");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Women's Sizzlig Red\nParty Dress&itemrating=4.1&price=4000&product=./products/p9.glb`,
+        `/checkout.html?itemname=Women's Sizzling Red\nParty Dress&itemrating=4.1&price=4000&product=./products/p9.glb&scale=3.7 3.7 3.7&description=Long sleeve
+        Classic notch lapel
+        Two button front, double breasted
+        Two hand pockets, four colors available
+        Plain design, simple but fashion, essential wool coat
+        &qr=./qr_code/9p.png`,
         "_blank"
       );
     });
@@ -795,7 +814,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Women's Sizzlig Red\nParty Dress");
@@ -819,7 +838,8 @@ AFRAME.registerComponent("do-something-once-loaded-9", {
     const playBtn = document.querySelector("#goto9");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Indian Women's Salwar\nSuit&itemrating=4.2&price=3750&product=./products/p10.glb`,
+        `/checkout.html?itemname=Indian Women's Salwar\nSuit&itemrating=4.2&price=3750&product=./products/p10.glb&scale=3.7 3.7 3.7&description=Fabric detail: Beautiful Stitched 100 percent pure Cotton printed Salwar Suit For women
+        Readymade Stitched Fabric Set: Stitched Cotton Top, Stitched Cotton Bottom and Stitched Cotton Dupatta&qr=./qr_code/10p.png`,
         "_blank"
       );
     });
@@ -884,7 +904,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-text");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "-3.2 5.7 0.34");
 model.setAttribute("troika-text", "value", "Indian Women's Salwar\nSuit");
@@ -909,7 +929,10 @@ AFRAME.registerComponent("do-something-once-loaded-10", {
     const playBtn = document.querySelector("#goto10");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=ELTOP Lifestyle Nano Fabric\nSofa Set&itemrating=4.1&price=24,999&product=./products/sofa1/scene.gltf&scale=0.35 0.18 0.18`,
+        `/checkout.html?itemname=ELTOP Lifestyle Nano Fabric\nSofa Set&itemrating=4.1&price=24,999&product=./products/sofa1/scene.gltf&scale=0.35 0.18 0.18&description=Type	Sectional
+        Room Type	Living Room
+        Seating Capacity	3
+        Product Dimensions	20D x 25W x 30H Centimeters&qr=./qr_code/p12.png`,
         "_blank"
       );
     }); //ELTOP Lifestyle Nano Fabric\nSofa Set\n\nRs 24,999\nRated-4.1/5
@@ -948,7 +971,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-entity");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "16.1 5.9 2");
 model.setAttribute("rotation", "0 70 0");
@@ -978,7 +1001,9 @@ AFRAME.registerComponent("do-something-once-loaded-11", {
     const playBtn = document.querySelector("#goto11");
     playBtn.addEventListener("click", (e) => {
       window.open(
-        `/checkout.html?itemname=Sekar Lifestyle Polyurethane \nFabric Sofa Set&itemrating=4.2&price=26,999&product=./products/sofa/scene.gltf&scale=0.035 0.016 0.016`,
+        `/checkout.html?itemname=Sekar Lifestyle Polyurethane \nFabric Sofa Set&itemrating=4.2&price=26,999&product=./products/sofa/scene.gltf&scale=0.035 0.016 0.016&description=Product Material: Original solid Sheesham Wood.
+        Product Dimension: Length (71 inch), Width (29 inch), Height (32 inch) Meatrial: Sheesham Wood, Seating Capacity: 3 Seat
+        Color: (Honey Finish)Cushion: Beige color, Style: Contemporary&qr=./qr_code/p11.png`,
         "_blank"
       );
     });
@@ -1017,7 +1042,7 @@ model.setAttribute(
 sceneEl.appendChild(model);
 //model text
 var model = document.createElement("a-entity");
-// model.setAttribute("class", "nametag");
+// /
 model.setAttribute("side", "double");
 model.setAttribute("position", "8.1 5.9 2.05");
 model.setAttribute("rotation", "0 70 0");

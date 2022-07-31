@@ -38,6 +38,15 @@ small {
   transition: 0.3s ease-in;
 }
 
+.qr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in;
+}
 .confirm-btn:hover {
   background: white;
   color: orangered;
@@ -45,6 +54,11 @@ small {
 .cancel-btn:hover {
   background: white;
   color: orange;
+}
+
+.qr-btn:hover {
+  background: white;
+  color: black;
 }
 
 a-scene {
