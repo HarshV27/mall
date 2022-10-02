@@ -1,4 +1,34 @@
 //three js code of all the products in our mall
+AFRAME.registerComponent("over-listener", {
+  schema: {
+    mouseover: { type: "boolean", default: false },
+  },
+  init: function () {
+    var el = this.el; // reference to the entity that contains this component
+    var data = this.data; // reference to the properties of this component.
+    // Listen for mouseenter event
+
+    this.el.addEventListener("mouseenter", function (evt) {
+      // You can't change the property directly. You must use setAttribute.
+      el.setAttribute("over-listener", "mouseover", true); // this.el fail, due to scope of the function. Must use this reference.
+      // Change the color of the button to indicate rollover state is on.
+    });
+    // Listen for mouseleave event
+    this.el.addEventListener("mouseleave", function (evt) {
+      el.setAttribute("over-listener", "mouseover", false);
+    });
+  },
+  tick: function () {
+    // called every frame
+    if (this.data.mouseover) {
+      // Check the mouseover state
+      let elOcta = this.el;
+      let rot = elOcta.getAttribute("rotation");
+      elOcta.setAttribute("rotation", { x: rot.x, y: rot.y + 5, z: rot.z });
+    }
+  },
+});
+
 var my_scene = document.querySelector("a-scene");
 var sceneEl = document.createElement("a-entity");
 sceneEl.setAttribute("position", "74 0 -130");
@@ -22,6 +52,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p1.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+// //
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -55,7 +87,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -116,6 +148,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p2.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -149,7 +183,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -206,6 +240,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p3.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -239,7 +275,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -299,6 +335,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p4.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -332,7 +370,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -393,6 +431,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p5.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -426,7 +466,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -485,6 +525,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p6.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -518,7 +560,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -577,6 +619,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p7.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -610,7 +654,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -667,6 +711,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p8.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -700,7 +746,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -761,6 +807,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p9.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -794,7 +842,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -851,6 +899,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/p10.glb");
 entityEl.setAttribute("position", "0 1.6 0");
 entityEl.setAttribute("scale", "3.5 3.5 3.5");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //price tag
 var model = document.createElement("a-entity");
@@ -884,7 +934,7 @@ model.setAttribute("geometry", "primitive: plane; width: 0.50; height: 0.42;");
 model.setAttribute("position", "0.4 9 0");
 model.setAttribute(
   "material",
-  "src:./star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
+  "src:./resources/star-regular.svg;transparent: true;metalness:0.6; roughness: 0.4;"
 );
 model.setAttribute("color", "white");
 sceneEl.appendChild(model);
@@ -945,6 +995,8 @@ entityEl.setAttribute("gltf-model", "./products/sofa1/scene.gltf");
 entityEl.setAttribute("position", "0 3.5 -2");
 // entityEl.setAttribute("scale", "0.1 0.06 0.06");
 entityEl.setAttribute("scale", "1.4 1 1");
+//
+entityEl.setAttribute("over-listener", "");
 sceneEl.appendChild(entityEl);
 //cylender stand
 model = document.createElement("a-cylinder");
@@ -1015,6 +1067,8 @@ var entityEl = document.createElement("a-entity");
 entityEl.setAttribute("gltf-model", "./products/sofa/scene.gltf");
 entityEl.setAttribute("position", "0 2.1 0");
 entityEl.setAttribute("scale", "0.1 0.06 0.06");
+//
+entityEl.setAttribute("over-listener", "");
 // entityEl.setAttribute("scale", "1.4 1 1");
 sceneEl.appendChild(entityEl);
 //cylender stand

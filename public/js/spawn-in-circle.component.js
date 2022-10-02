@@ -6,10 +6,10 @@ AFRAME.registerComponent("spawn-in-circle", {
 
   init: function () {
     var el = this.el;
-    var center = el.getAttribute("position");
+    var center = el.getAttribute("position"); //origional posn
 
-    var angleRad = this.getRandomAngleInRadians();
-    var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad);
+    var angleRad = this.getRandomAngleInRadians(); //for circle
+    var circlePoint = this.randomPointOnCircle(this.data.radius, angleRad); //get random point
     var worldPoint = {
       x: circlePoint.x + center.x,
       y: center.y,
@@ -17,7 +17,7 @@ AFRAME.registerComponent("spawn-in-circle", {
     };
     el.setAttribute("position", worldPoint);
 
-    var angleDeg = (angleRad * 180) / Math.PI;
+    var angleDeg = (angleRad * 180) / Math.PI; //randomizing initial angle
     var angleToCenter = -1 * angleDeg + 90;
     angleRad = THREE.Math.degToRad(angleToCenter);
     el.object3D.rotation.set(0, angleRad, 0);

@@ -62,9 +62,40 @@ small {
 }
 
 a-scene {
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 13.5%;
+  margin-right: 17.5%;
+  margin-top: 12px;
   margin-bottom: 12px;
-  width: 90%;
+  width: 69%;
   height: 600px;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
+}
+.formv {
+  position: relative;
+  z-index: 1;
+  border-radius: 16px;
+  background-image: url("http://www.fellowshipbbc.org/wp-content/uploads/2013/06/Semitransparent-white-background-20-percent-opacity.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.formbox {
+  z-index: 1;
+  border-radius: 12px;
+  background-image: url("http://www.fellowshipbbc.org/wp-content/uploads/2013/06/Semitransparent-white-background-20-percent-opacity.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.formnav {
+  z-index: 1;
+  /* border-radius: 12px; */
+  /* background-image: url("http://www.fellowshipbbc.org/wp-content/uploads/2013/06/Semitransparent-white-background-20-percent-opacity.png"); */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }

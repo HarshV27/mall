@@ -17,5 +17,6 @@ AFRAME.registerComponent("play-on-click", {
     window.removeEventListener("click", this.onClick);
   },
 
-  onClick: function (evt) {},
+  onClick: function (evt) {}, //kept it empty so that video starts playing as soon as it runs
 });
+//

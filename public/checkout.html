@@ -64,11 +64,41 @@
           }
         },
       });
+      AFRAME.registerComponent("over-listener", {
+        schema: {
+          mouseover: { type: "boolean", default: false },
+        },
+        init: function () {
+          var el = this.el; // reference to the entity that contains this component
+          var data = this.data; // reference to the properties of this component.
+          // Listen for mouseenter event
+          // You can't change the property directly. You must use setAttribute.
+          el.setAttribute("over-listener", "mouseover", true); // this.el fail, due to scope of the function. Must use this reference.
+          // Change the color of the button to indicate rollover state is on.
+          // Listen for mouseleave event
+          this.el.addEventListener("click", function (evt) {
+            el.setAttribute("over-listener", "mouseover", false);
+          });
+        },
+        tick: function () {
+          // called every frame
+          if (this.data.mouseover) {
+            // Check the mouseover state
+            let elOcta = this.el;
+            let rot = elOcta.getAttribute("rotation");
+            elOcta.setAttribute("rotation", {
+              x: rot.x,
+              y: rot.y + 0.7,
+              z: rot.z,
+            });
+          }
+        },
+      });
     </script>
   </head>
   <body>
     <div>
-      <div class="nav bg-primary p-3">
+      <div class="nav bg-primary p-3 formnav">
         <div class="container">
           <div class="text-white fw-bold">
             <h4>Flipkart</h4>
@@ -77,21 +107,21 @@
       </div>
 
       <!--embedded model scene -->
-      <a-scene embedded>
-        <a-sky color="#F4F9F9" opacity="0.7"></a-sky>
-
+      <a-scene embedded class="formv">
+        <a-sky color="#F1EEE9" opacity="0.7"></a-sky>
+        <!-- F4F9F9 -->
         <!-- Lights -->
         <a-light
           type="directional"
           castShadow="true"
-          intensity="0.7"
+          intensity="0.9"
           color="#D0EAF9;"
           position="5 3 1"
         ></a-light>
-        <a-light intensity="1.5" type="ambient" color="#ccccff"></a-light>
+        <a-light intensity="1.8" type="ambient" color="#ccccff"></a-light>
 
         <!-- Camera -->
-        <a-camera position="0 3 4.5" look-controls="enabled:false">
+        <a-camera position="0 4 4.5" look-controls="enabled:false">
           <a-cursor></a-cursor>
         </a-camera>
         <!--selected product model-->
@@ -100,6 +130,7 @@
           rotation="0 0 0"
           scale="2.8 2.8 2.8"
           position="0 0.5 -1.5"
+          over-listener
           drag-rotate-component
         ></a-entity>
       </a-scene>
@@ -109,7 +140,7 @@
           <!-- Personal Details section -->
           <div class="col-7 m-2 p-2">
             <form>
-              <div class="box">
+              <div class="box formbox">
                 <div class="nav bg-primary p-2 mb-2">
                   <div class="container">
                     <div class="text-white">
@@ -162,7 +193,7 @@
               </div>
 
               <!-- Delivery Details Section -->
-              <div class="mt-4 box">
+              <div class="mt-4 box formbox">
                 <div class="nav bg-primary p-2 mb-2">
                   <div class="container">
                     <div class="text-white">
@@ -240,7 +271,7 @@
 
           <!-- Order details -->
           <div class="col-4 m-2 p-2">
-            <div class="box">
+            <div class="box formbox">
               <div class="nav bg-primary p-2 mb-2">
                 <div class="container">
                   <div class="text-white">

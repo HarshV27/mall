@@ -83,7 +83,7 @@
         var params = getUrlParams();
 
         this.el.setAttribute("troika-text", "value", params.username);
-
+        console.log(this.el);
         function getUrlParams() {
           var match;
           var pl = /\+/g; // Regex for replacing addition symbol with a space
@@ -103,11 +103,37 @@
         }
       },
     });
+    AFRAME.registerComponent("rotate", {
+  init: function () {
+    document.body.onkeydown = (e) => {
+      if (e.key == "ArrowLeft"||e.key=="a"||e.key=="g") {
+        this.el.components["look-controls"].yawObject.rotation.y += 0.02;//used to rotate the entity
+      } else if (e.key == "ArrowRight"||e.key=='d'||e.key=="h") {
+        this.el.components["look-controls"].yawObject.rotation.y -= 0.02;
+      }
+    };
+  },
+});
+
+AFRAME.registerComponent("rotatemain", {
+  init: function () {
+    console.log(this.el);
+    const playB = document.querySelector("#mybox");
+    playB.addEventListener("click", (e)=>{
+      // let elOcta = this.el;
+      // console.log(elOcta);
+      // let rot = elOcta.getAttribute("rotation");
+      // console.log(this.el);
+      let rot = playB.getAttribute("rotation");
+      playB.setAttribute("rotation", { x: rot.x, y: rot.y + 90, z: rot.z });
+    });
     
+  },
+});
   </script>
   
   <body>
-    <span class="link"></span>\
+    <span class="link"></span>
 
     <!--this element is our entire 3d world enclosing all the 3d components in it -->
     <a-scene
@@ -120,6 +146,7 @@
     renderer="logarithmicDepthBuffer: true;"
     rotation="0 0 0"
     cursor="rayOrigin: mouse"
+    loading-screen="dotsColor: red; backgroundColor: black"
     >
       <a-assets >
        <!--this is our default model for avatar-->
@@ -130,13 +157,13 @@
        <!--audio and video used for advertisement banner inside and outside-->
         <audio
         id="music"
-        src="./videoplayback (audio-extractor.net).mp3"
+        src="./resources/videoplayback (audio-extractor.net).mp3"
         
       ></audio>
         <video
           id="videoBunny"
           preload="auto"
-          src="./videoplayback.mp4"
+          src="./resources/videoplayback.mp4"
           width="160"
           height="90"
           autoplay
@@ -147,7 +174,7 @@
         <video
           id="videoFireworks"
           preload="auto"
-          src="./production ID_4911644.mp4"
+          src="./resources/production ID_4911644.mp4"
           width="160"
           height="90"
           autoplay="true"
@@ -155,14 +182,25 @@
           crossorigin="anonymous"
           muted
         ></video>
-        
+        <video
+          id="myvido"
+          preload="auto"
+          src="./resources/centervid.mp4"
+          width="160"
+          height="90"
+          autoplay="true"
+          loop="true"
+          crossorigin="anonymous"
+          muted
+        ></video>
         </a-asset-item>
         <!--all the other models used in this 3d world except products-->
-        <a-asset-item id="vr-scene1" src="./sky.glb"> </a-asset-item>
+        <a-asset-item id="vr-scene1" src="./resources/sky.glb"> </a-asset-item>
         <a-asset-item id="vr-scene2" src="./shoppin-mall/scene.gltf">
-        <a-asset-item id="vr-scene3" src="./floor.glb">
+        <a-asset-item id="vr-scene3" src="./resources/floor.glb">
         <a-asset-item id="vr-scene4" src="./billboard/scene.gltf">
-
+        <a-asset-item id="vrtree" src="./resources/tree.glb">
+        <a-asset-item id="mylogo" src="./resources/logo.png">
         <!-- Templates -->
 
         <!-- Avatar -->
@@ -176,6 +214,7 @@
                 troika-color="black"
                 position="-60 6 0"
                 scale="2 2 2"
+                animation-mixer
               ></a-entity>
 
               <a-entity
@@ -196,8 +235,10 @@
         follow-box="target: #player"
         look-controls
         movement-controls="fly: true; speed: 1"
+        wasd-controls
+        rotate
       >
-        <a-entity camera position="-60 6 -0.3" rotation="0 0 0"id="cam"></a-entity>
+        <a-entity camera position="0 6 -0.5" rotation="0 0 0"id="cam"></a-entity>
       </a-entity>
 
       <a-entity id="cameraRig">
@@ -216,7 +257,7 @@
         class="nametag"
         troika-text="value: Hello  ji there!;color:#228B22;outlineColor: black;outlineWidth: 0.002;"
         troika-color="black"
-        position="-60 5.6 0"
+        position="0 5.6 0"
         side="double"
         rotation="0 0 0"
         scale="2 2 2 "
@@ -228,64 +269,88 @@
             gltf-model="#vr-scene"
             rotation="0 180 0"
                 scale="2.8 2.8 2.8"
-                position="-60 0 0"
-  
+                position="0 0 0"
+                animation-mixer
             model-changer
           ></a-entity>
       </a-entity>
-        
-        </a-entity>
+      <a-entity
+     id="mouseCursor"
+     cursor="rayOrigin: mouse"
+     raycaster="objects: .clickable"
+   ></a-entity>
+   <!-- casts a ray and interacts with only clickable -->
       </a-entity>
-      <!--this our central shopping mall-->
-      <a-entity
-        gltf-model="#vr-scene2"
-        rotation="0 50 0"
-        scale="0.05 0.05 0.05"
-        position="5 0 1"
-        material="metalness: 0.8;"
-      ></a-entity>
-      <!--this used for the trangular flooring of our mall-->
-      <a-entity
-        gltf-model="#vr-scene3"
-        rotation="0 180 0"
-        scale="16 8 6.5"
-        rotation="0 40 0"
-        position="63 0.6 -214"
-      ></a-entity>  
-      <a-entity
-        position="233 0.7 -250"
-        geometry="primitive: plane; width: 180; height: 28;"
-        material="color: white;"
-        rotation="-90 50 0"
-      ></a-entity> 
-      <!--this is used for audio and video in our billboard-->
-      <a-cylinder
-        radius="2"
-        height="5"
-        position="-5 22 -85"
-        sound="src: #music; 
-          autoplay: true;
-          volume: 0.2;
-          refDistance: 30;
-          rolloffFactor: 20;
-          loop: true;"
-      >
-      </a-cylinder>
-      <a-entity
-      position="40 11 -260"
-      geometry="primitive: plane; width: 230; height: 22;"
-      material="shader: flat; src: #videoFireworks"
-      rotation="0 17 0"
-      play-on-click
+    </a-entity>
+    <!--this our central shopping mall-->
+    <a-entity
+      gltf-model="#vr-scene2"
+      rotation="0 50 0"
+      scale="0.05 0.05 0.05"
+      position="5 0 1"
+      material="metalness: 0.8;"
     ></a-entity>
-      <a-entity
-      material="shader: flat; src: #videoBunny"
-      geometry="primitive: plane; width: 38; height: 22;"
-      position="-2 38.5 -80"
-      rotation="0 45 0"
-      play-on-click
-    > 
-    </a-entity> 
+    <!--this used for the trangular flooring of our mall-->
+    <a-entity
+      gltf-model="#vr-scene3"
+      rotation="0 180 0"
+      scale="16 8 6.5"
+      rotation="0 40 0"
+      position="63 0.6 -214"
+    ></a-entity>  
+    <a-entity
+      position="233 0.7 -250"
+      geometry="primitive: plane; width: 180; height: 28;"
+      material="color: white;"
+      rotation="-90 50 0"
+    ></a-entity> 
+    <!--this is used for audio and video in our billboard-->
+    <a-cylinder
+      radius="2"
+      height="5"
+      position="-5 22 -85"
+      sound="src: #music; 
+        autoplay: true;
+        volume: 0.4;
+        refDistance: 30;
+        rolloffFactor: 20;
+        loop: true;"
+    >
+    </a-cylinder>
+    <a-entity
+    position="40 11 -268"
+    geometry="primitive: plane; width: 230; height: 22;"
+    material="shader: flat; src: #videoFireworks"
+    rotation="0 17 0"
+    play-on-click
+  ></a-entity>
+    <a-entity
+    material="shader: flat; src: #videoBunny"
+    geometry="primitive: plane; width: 38; height: 22;"
+    position="-2 38.5 -80"
+    rotation="0 45 0"
+    play-on-click
+  > 
+  </a-entity> 
+
+  <a-box  depth="16" height="7" width="16" position="94 20 -160"
+  id="mybox"
+  rotation="0 0 0"
+  material="shader: flat; src: #myvido"
+  animation="property: rotation; to: 0 90 0; loop: true; dur: 2700;easing: easeInOutQuad;"
+  rotatemain
+  play-on-click 
+  ></a-box>
+  <a-entity
+    material="color: #ccccff"
+    side="double"
+    geometry="primitive: plane; width: 16; height: 16;"
+    position="94 16.4 -160"
+    animation="property: rotation; to: 90 90 0; loop: true; dur: 2700;easing: easeInOutQuad;"
+    rotation="90 0 0"
+  > 
+  </a-entity> 
+
     <!--this the model of our bill board-->
     <a-entity
     class="model"
@@ -295,9 +360,17 @@
         position="-5 22 -85"
   >
 </a-entity>
+<a-entity
+    class="model"
+    gltf-model="#vrtree"
+    rotation="0 45 0"
+        scale="3.7 3.7 3.7"
+        position="98 4 -165"
+  >
+</a-entity>
     <!--this is lighting of  our central shopping mall-->
       <a-entity
-        light="color: #ccccff; intensity: 1.1; type: ambient;"
+        light="color: #ccccff; intensity: 1.23; type: ambient;"
         visible="no"
       ></a-entity>
       <a-entity
@@ -309,7 +382,7 @@
     </a-scene>
 
     <!-- GitHub Corner. -->
-    <a
+    <!-- <a
       href="https://github.com/HarshV27/mall"
       class="github-corner"
     >
@@ -339,7 +412,7 @@
           class="octo-body"
         ></path>
       </svg>
-    </a>
+    </a> -->
    <!--our buttons for audio and 3'rd person view -->
     <div class="actions">
       <button id="mic-btn" type="button" class="button"><i id="mt-btn" class="fa-solid fa-microphone fa-xl"></i></button>
@@ -387,9 +460,9 @@
         camaraBtn.addEventListener("click", function () {
           // NAF.connection.adapter.enableMicrophone(!micEnabled);
           if (!camaraEnabled) {
-            camaraElt.setAttribute("position", "-60 6 -0.3");
+            camaraElt.setAttribute("position", "0 6 -0.5");
           } else {
-            camaraElt.setAttribute("position", "-60 6 6");
+            camaraElt.setAttribute("position", "0 6 6");
           }
           camaraEnabled = !camaraEnabled;
           var mc = document.getElementById("cm-btn");

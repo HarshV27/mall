@@ -34,8 +34,8 @@ const myIceServers = [
   //   "credential":"[CREDENTIAL]"
   // }
 ];
-easyrtc.setOption("appIceServers", myIceServers);
-easyrtc.setOption("logLevel", "debug");
+easyrtc.setOption("appIceServers", myIceServers); // uses the google ip address's to use the free servers provided by google
+easyrtc.setOption("logLevel", "debug"); //logs all the dubug form the easyrtc server
 easyrtc.setOption("demosEnable", false);
 
 // Overriding the default easyrtcAuth listener, only so we can directly access its callback
