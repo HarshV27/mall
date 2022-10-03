@@ -206,13 +206,13 @@ AFRAME.registerComponent("rotatemain", {
         <!-- Avatar -->
         <template id="avatar-template">
           <a-entity class="avatar" networked-audio-source>
-            <a-entity class="avatar" networked-audio-source>
+            <a-entity class="avatar"  networked-audio-source>
               <a-entity
                 class="nametag"
                 troika-text="value: Hello ji there!;color: red;outlineColor: black;outlineWidth: 0.002;"
                 side="double"
                 troika-color="black"
-                position="-60 6 0"
+                position="0 6 0"
                 scale="2 2 2"
                 animation-mixer
               ></a-entity>
@@ -221,7 +221,7 @@ AFRAME.registerComponent("rotatemain", {
                 class="model"
                 rotation="0 180 0"
                 scale="2.8 2.8 2.8"
-                position="-60 0 0"
+                position="0 0 0"
                 gltf-model="#vr-scene"
               ></a-entity>
             </a-entity>
@@ -311,9 +311,9 @@ AFRAME.registerComponent("rotatemain", {
       position="-5 22 -85"
       sound="src: #music; 
         autoplay: true;
-        volume: 0.6;
+        volume: 0.5;
         refDistance: 60;
-        rolloffFactor: 40;
+        rolloffFactor: 10;
         loop: true;"
     >
     </a-cylinder>
